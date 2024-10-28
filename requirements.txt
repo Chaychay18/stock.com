@@ -8,6 +8,6 @@ pandas==2.2.3
 plotly==5.22.0
 Requests==2.32.3
 scikit_learn==1.4.2
-tensorflow==2.18.0
-tensorflow_intel==2.18.0
+tensorflow
+tensorflow_intel
 WTForms==3.2.1
