@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title> STOCKS.com </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+  <!-- Fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- Responsive style -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+  <!-- Additional styles -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <div class="bg_img_box">
+        <img src="images/hero-bg.png" alt="">
+      </div>
+    </div>
+
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              STOCKS.com
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ">
+              <li class="nav-item ">
+                <a class="nav-link" href="{{url_for('home_page')}}">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('about')}}"> About</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('service')}}">Services <span class="sr-only">(current)</span> </a>
+              </li>
+              <li class="nav-item">
+              </li>
+              <li class="nav-item">
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('login_page')}}"> <i class="fa fa-user" aria-hidden="true"></i> Login</a>
+              </li>
+              <form class="form-inline">
+                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </form>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+
+  <!-- service section -->
+
+  <section class="service_section layout_padding">
+    <div class="service_container">
+      <div class="container ">
+        <div class="heading_container heading_center">
+          <h2>
+            Our <span>Services</span>
+          </h2>
+          <p>
+            There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="images/s1.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Visualization
+                </h5>
+                <p>
+                  STOCKS.com offers state-of-the-art stock visualization tools designed to help you understand market trends and dynamics at a glance. 
+                  Our platform provides interactive charts and graphs that display real-time data, historical trends, and predictive analytics. 
+                  With customizable views and advanced filtering options, you can easily track your preferred stocks and spot opportunities. Visualizing stock performance has never been easier, allowing you to make data-driven decisions with confidence.
+                   Explore the power of visualization with STOCKS.com and elevate your trading strategy.
+                </p>
+                <a href="">
+                  Read More
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="images/s2.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Predictions
+                </h5>
+                <p>
+                  At STOCKS.com, our advanced prediction tools leverage cutting-edge machine learning algorithms to forecast stock price movements with high accuracy. By analyzing vast amounts of historical data and current market trends, our predictive models offer insights into future stock performance. These predictions help you anticipate market shifts, identify potential opportunities, and minimize risks. With user-friendly interfaces and clear visual representations, you can easily interpret prediction data and make informed investment decisions. Trust STOCKS.com to provide reliable stock predictions and stay ahead in the dynamic world of trading.
+
+
+
+
+
+
+
+                </p>
+                <a href="">
+                  Read More
+                </a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4 ">
+            <div class="box ">
+              <div class="img-box">
+                <img src="images/s3.png" alt="">
+              </div>
+              <div class="detail-box">
+                <h5>
+                  Trading and Analyzations
+                </h5>
+                <p>
+                  STOCKS.com simplifies the trading process with a seamless, user-friendly platform designed for both novice and experienced investors. Our real-time trading tools enable you to buy and sell shares effortlessly, with instant execution and transparent pricing. The intuitive interface ensures that you can manage your portfolio with ease, monitor your investments, and execute trades quickly. Whether you're looking to capitalize on market movements or diversify your holdings, STOCKS.com provides the reliable and efficient trading experience you need to achieve your financial goals.
+                </p>
+                <a href="">
+                  Read More
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="btn-box">
+          <a href="">
+            View All
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end service section -->
+
+  <!-- info section -->
+
+  <section class="info_section layout_padding2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 col-lg-3 info_col">
+          <div class="info_contact">
+            <h4>
+              Address
+            </h4>
+            <div class="contact_link_box">
+              <a href="">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>
+                  Location
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-phone" aria-hidden="true"></i>
+                <span>
+                  Call +01 1234567890
+                </span>
+              </a>
+              <a href="">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                <span>
+                  stocks.com@gmail.com
+                </span>
+              </a>
+            </div>
+          </div>
+          <div class="info_social">
+            <a href="">
+              <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-linkedin" aria-hidden="true"></i>
+            </a>
+            <a href="">
+              <i class="fa fa-instagram" aria-hidden="true"></i>
+            </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 info_col">
+          <div class="info_detail">
+            <h4>
+              Developers
+            </h4>
+            <p>
+                CHAITHANYA V
+                <br>
+            </p>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-2 mx-auto info_col">
+          <div class="info_link_box">
+            <h4>
+              Links
+            </h4>
+            <div class="info_links">
+              <a class="active" href="{{url_for('home_page')}}">
+                Home
+              </a>
+              <a class="" href="{{url_for('about')}}">
+                About
+              </a>
+              <a class="" href="{{url_for('service')}}">
+                Services
+              </a>
+              
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 col-lg-3 info_col ">
+          <h4>
+            Subscribe
+          </h4>
+          <form action="#">
+            <input type="text" placeholder="Enter email" />
+            <button type="submit">
+              Subscribe
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- end info section -->
+
+  <!-- footer section -->
+  <section class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="#">STOCKS.com</a>
+      </p>
+    </div>
+  </section>
+  <!-- footer section -->
+
+  
+</body>
+
+</html>

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Data Visualization</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!--owl slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <!-- font awesome style -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <!-- responsive style -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <style>
+        body {
+            background: #fff;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .stock {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .stock img {
+            width: auto;
+            height: 100px;
+            object-fit: cover;
+            opacity: 0.8;
+            margin-top: 20px;
+        }
+
+        .stock span {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color:black;
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .current-price {
+            font-size: 42px;
+            color: black;
+            margin-top: 10px;
+        }
+
+        .current-price span {
+            font-size: 40px;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .graph-container {
+            position: relative;
+            margin-top: 20px;
+            width: 70%; /* Adjust as needed */
+            float: left;
+            margin-bottom: 240px;
+        }
+        .graph-container:hover{
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+       }
+
+        #chart {
+            width: 100%;
+            margin-bottom: 120px;
+        }
+
+        .graph-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: left;
+            margin-bottom: 60px;
+        }
+
+        .graph-buttons button {
+            background-color: #fff;
+            color: black;
+            padding: 10px 20px;
+            text-align: left;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(72, 12, 149, 0.1);
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .graph-buttons button:hover {
+            box-shadow: 0 8px 16px rgba(95, 195, 218, 0.2);
+        }
+
+        .left_area h3 {
+            color: #19B3D3;
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 36px;
+            font-weight: 900;
+            background: black;
+            height: 80px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left_area span {
+            color: white;
+        }
+
+        h3 {
+            color: green;
+        }
+
+        .content-container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            clear: both;
+        }
+
+        .section {
+            flex: 1;
+            margin: 10px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin: 40px 0 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .section-content {
+            padding: 20px;
+            animation: slideIn 1s ease-in-out;
+            background: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .news-article {
+            margin-bottom: 15px;
+        }
+
+        .news-article h4 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .news-article p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .news-article a {
+            font-size: 14px;
+            color: #1a73e8;
+            text-decoration: none;
+        }
+
+        .company-details p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .company-details span {
+            font-weight: bold;
+        }
+
+        .responsive-container {
+        position: relative;
+        margin-top: 50px;
+        width: 30%; /* Adjust as needed */
+        float: left;
+        padding-bottom: 30%; /* Maintains aspect ratio (adjust as needed) */
+        overflow: hidden;
+        border: 2px solid white;
+        transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .responsive-container:hover {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .responsive-container-inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .stock-details {
+        text-align: center;
+        margin-bottom: 120px;
+        margin-right: 240px;
+    }
+
+    .stock-name-price {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .stock-name {
+        font-size: 24px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .current-prices {
+        font-size: 20px;
+        color: black;
+        text-align: left;
+    }
+
+    .quantity-input {
+
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .quantity-input label {
+        font-size: 16px;
+        margin-right: 10px;
+    }
+
+    .quantity-input input {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .animated-buttons {
+        text-align: center;
+    }
+
+    .animated-buttons button {
+        background-color: #19B3D3;
+        color: black;
+        padding: 12px 24px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px;
+        cursor: pointer;
+        border: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(25, 179, 211, 0.3);
+        transition: box-shadow 0.3s ease-in-out, background-color 0.3s ease-in-out;
+    }
+
+    .animated-buttons button .buy:hover{
+        box-shadow: 0 8px 16px rgba(233, 237, 237, 0.5);
+        background-color: red;
+    }
+    .animated-buttons button .sell:hover{
+        box-shadow: 0 8px 16px rgba(233, 237, 237, 0.5);
+        background-color: green;
+    }
+
+
+    .animated-buttons .buy {
+        background-color: tomato;
+        color: #fff;
+    }
+    .animated-buttons .sell {
+        background-color: lightgreen;
+        color: #fff;
+    }
+    .wallet {
+    padding: 5px;
+    background:lightgreen;
+    text-decoration: none;
+    float: right;
+    margin-top: -60px;
+    margin-right: 120px;
+    border-radius: 2px;
+    font-size: 25px;
+    font-weight: 600;
+    color: black;
+    transition: 0.5s;
+    transition-property: background;
+}
+.watchlist{
+    padding: 10px;
+    background: #19B3D3;
+    text-decoration: none;
+    float: right;
+    margin-top: 220px;
+    margin-right: 140px;
+    border-radius: 2px;
+    font-size: 25px;
+    font-weight: 600;
+    color: white;
+    transition: 0.5s;
+    transition-property: background;
+}
+.watchlist:hover{
+    box-shadow: 0 8px 16px white;
+
+}
+.flash-messages {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .alert {
+            padding: 10px 20px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+        
+
+
+    </style>
+</head>
+<body>
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <header>
+        
+        <div class="left_area">
+
+            <h3>STOCKS<span>.com</span></h3>
+            <a href="#" class="wallet">{{ wallet_amount }}</a>
+        </div>
+    </header>
+
+    <a href="{{url_for('stocks')}}">Stocks</a>
+
+    <form id="watchlist-form" action="{{ url_for('add_to_watchlist') }}" method="POST">
+        <input type="hidden" name="stock_name" value="{{ stock_name }}">
+        <input type="hidden" name="current_price" value="{{ current_price }}">
+        <button type="submit" class="watchlist">ADD to Watchlist</button>
+    </form>
+    
+    <div class="graph-container">
+        <div class="stock">
+            <img src="images/titan.jpg" alt="titan">
+            <br><br><br><br>
+            <span>Titan Company</span>
+        </div>
+
+        <!-- Display current price with styling -->
+        <div class="current-price">
+            <span>&#8377;</span> {{ current_price }}
+        </div>
+
+        <div id="chart"></div>
+        <br><br><br>
+        <div class="graph-buttons">
+            <button onclick="fetchData('1M')">1M</button>
+            <button onclick="fetchData('1Y')">1Y</button>
+            <button onclick="fetchData('5Y')">5Y</button>
+            <button onclick="fetchData('All')">All</button>
+            <button onclick="fetchPredictions()">Predictions</button>
+        </div>
+    </div>
+
+    <!-- Responsive Container for Buy and Sell buttons -->
+    <div class="responsive-container">
+        <div class="responsive-container-inner">
+            <div class="stock-details">
+                <div class="stock-name">{{ stock_name }}</div>
+                <div class="current-prices">&#8377; {{ current_price }}</div>
+            </div>
+            
+            <!-- Form with Buy and Sell buttons -->
+            <form method="POST" action="{{ url_for('titan_page') }}">
+                <div class="quantity-input">
+                    <label for="quantity">Quantity:</label>
+                    <input type="number" id="quantity" name="quantity" min="1" value="1" required>
+                </div>
+                <div class="animated-buttons">
+                    <button type="submit" name="action" value="buy" class="buy">Buy</button>
+                    <button type="submit" name="action" value="sell" class="sell">Sell</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div class="content-container">
+        <div id="company-overview" class="section">
+            <h2 class="section-header">Company Overview</h2>
+            <div class="section-content company-details">
+                <p><span>About Titan:Titan Company Limited is an Indian company that mainly manufactures fashion accessories such as jewellery, watches and eyewear. Part of the Tata Group and started as a joint venture with TIDCO, the company has its corporate headquarters in Electronic City, Bangalore, and registered office in Hosur, Tamil Nadu.</span> </p>
+                <p><span>Subsidiaries:</span> CaratLane, Titan Engineering & Automation Limited</p>
+                <p><span>Owner:</span>Tata Sons</p>
+                <p><span>CEO:</span> C.K. Venkataraman (May 2024)</p>
+                <p><span>Founder:</span>Xerxes Desai</p>
+                <p><span>Founded:</span> 1984</p>
+                <p><span>Headquarters:</span>Bengaluru</p>
+                <p><span>Number of employees:</span> 8,680 (2024)</p>
+            </div>
+        </div>
+
+        <div id="stock-news" class="section">
+            <h2 class="section-header">Stock News</h2>
+            <div class="section-content">
+                <!-- News articles will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function searchStock() {
+            const searchQuery = document.getElementById('search_query').value;
+            fetch(`/search?query=${searchQuery}`)
+                .then(response => response.json())
+                .then(data => {
+                    alert(`Search results: ${data}`);
+                });
+        }
+
+        function fetchData(period) {
+            fetch(`/titan/${period}`)
+                .then(response => response.json())
+                .then(data => {
+                    const graph = JSON.parse(data);
+                    Plotly.newPlot('chart', graph.data, graph.layout);
+                });
+        }
+
+        function fetchPredictions() {
+            fetch('/predict_titan')
+                .then(response => response.json())
+                .then(data => {
+                    const graph = JSON.parse(data);
+                    Plotly.newPlot('chart', graph.data, graph.layout);
+                });
+        }
+
+        
+
+        function fetchStockNews() {
+            // Fetch stock news and display in the stock news section
+            fetch('/titan-news')
+                .then(response => response.json())
+                .then(data => {
+                    let newsContent = '';
+                    const articles = data.articles.slice(0, 5); // Limit to 5 articles
+                    articles.forEach(article => {
+                        newsContent += `
+                            <div class="news-article">
+                                <h4>${article.title}</h4>
+                                <p>${article.description}</p>
+                                <a href="${article.url}" target="_blank">Read more</a>
+                            </div>
+                        `;
+                    });
+                    document.querySelector('#stock-news .section-content').innerHTML = newsContent;
+                });
+        }
+
+        fetchData('5Y');
+        fetchStockNews();
+    </script>
+</body>
+</html>

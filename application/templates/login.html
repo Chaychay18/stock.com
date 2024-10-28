@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title><meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="shortcut icon" href="images/favicon.png" type="">
+  
+    <title>STOCKS.com </title>
+  
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- responsive style -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/responsive.css') }}">
+
+  
+  </head>
+  
+  <body>
+  
+    <div class="hero_area">
+  
+      <div class="hero_bg_box">
+        <div class="bg_img_box">
+          <img src="images/hero-bg.png" alt="">
+        </div>
+      </div>
+  
+      <!-- header section strats -->
+      <header class="header_section">
+        <div class="container-fluid">
+          <nav class="navbar navbar-expand-lg custom_nav-container ">
+            <a class="navbar-brand" href="{{url_for('home_page')}}">
+              <span>
+                STOCKS.com
+              </span>
+            </a>
+  
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class=""> </span>
+            </button>
+  
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav  ">
+                <li class="nav-item active">
+                  <a class="nav-link" href="{{url_for('home_page')}}">Home </span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('about')}}"> About</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('service')}}">Services</a>
+                </li>
+                <li class="nav-item">
+                </li>
+                <li class="nav-item">
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{{url_for('login_page')}}"> <i class="fa fa-user" aria-hidden="true"></i> Login<span class="sr-only">(current)</a>
+                </li>
+                <form class="form-inline">
+                  <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                  </button>
+                </form>
+              </ul>
+            </div>
+          </nav>
+        </div>
+      </header>
+    
+    <!-- end header section -->
+</head>
+<style>
+    html {
+  height: 100%;
+}
+body {
+  margin:0;
+  padding:0;
+  font-family: sans-serif;
+  background: linear-gradient(#141e30, #243b55);
+}
+
+</style>
+ <div class="login-box">
+  <h2>Login</h2>
+  <form id="loginForm" method="post" action="/login">
+    {{form.hidden_tag()}}
+    <div class="user-box">
+      {{form.email_address.label(for="email_address")}}
+      {{ form.email_address(class='form-control')}}
+      <label>Email Address</label>
+    </div>
+    <div class="user-box">
+      {{form.password.label(for="password")}}
+      {{form.password(class="form-control")}}
+      <label>Password</label>
+    </div>
+    {{form.csrf_token()}}
+    <a  href="{{url_for('reg_page')}}">Sing-up?</a>
+    <a href="#">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      {{form.submit()}}
+    </a>
+  </form>
+ </div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const loginForm = document.getElementById("loginForm");
+      
+      loginForm.addEventListener("submit", function(event) {
+          event.preventDefault();
+
+          const formData = new FormData(loginForm);
+          fetch('/login', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.status === "success") {
+                  window.location.href = "{{ url_for('dashboard') }}";
+              } else {
+                  alert('Invalid email or password');
+              }
+          })
+          .catch(error => console.error('Error:', error));
+      });
+  });
+</script>
+</html>

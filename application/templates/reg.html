@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+  <link rel="shortcut icon" href="images/favicon.png" type="">
+
+  <title>STOCKS.com </title>
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!--owl slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- font awesome style -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+
+  <!-- Custom styles for this template -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+  <!-- responsive style -->
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/responsive.css') }}">
+  
+
+</head>
+
+<body>
+
+  <div class="hero_area">
+
+    <div class="hero_bg_box">
+      <div class="bg_img_box">
+        <img src="images/hero-bg.png" alt="">
+      </div>
+    </div>
+
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="index.html">
+            <span>
+              STOCKS.com
+            </span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ">
+              <li class="nav-item active">
+                <a class="nav-link" href="{{url_for('home_page')}}">Home </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('about')}}"> About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('service')}}">Services</a>
+              </li>
+              <li class="nav-item">
+              </li>
+              <li class="nav-item">
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('login_page')}}"> <span class="sr-only">(current)</span><i class="fa fa-user" aria-hidden="true"></i> Login</a>
+              </li>
+              <form class="form-inline">
+                <button class="btn  my-2 my-sm-0 nav_search-btn" type="submit">
+                  <i class="fa fa-search" aria-hidden="true"></i>
+                </button>
+              </form>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+  
+<style>
+  html {
+    height: 100%;
+  }
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    background: linear-gradient(#141e30, #243b55);
+  }
+
+    
+</style>
+<div class="reg-box">
+  <h2>CREATE YOUR ACCOUNT</h2>
+  <form id="registrationForm" method="post" action="/reg" >
+    {{form.hidden_tag()}}
+    <div class="user-box">
+      {{form.first_name.label(for='First_name')}}
+      {{form.first_name(class="form-control")}}
+
+      <label>FIRST NAME</label>
+    </div>
+    <div class="user-box">
+      {{form.last_name.label(for='Last_name')}}
+      {{form.last_name(class="form-control")}}
+      <label>LAST NAME</label>
+    </div>
+    <div class="user-box">
+      {{form.phone_number.label(for='phone_number')}}
+      {{form.phone_number(class="form-control")}}
+      <label>PHONE NUMBER</label>
+    </div>
+      <div class="user-box">
+        {{form.email_address.label(for='email_address')}}
+        {{form.email_address(class="form-control")}}
+        <label>EMAIL ADDRESS</label>
+      </div>
+      <div class="user-box">
+        {{ form.pan_number.label(for='pan_number') }}
+        {{ form.pan_number(class="form-control", id="pan_number", oninput="this.value = this.value.toUpperCase();") }}
+        <label>PAN NUMBER</label>
+    </div>
+    
+      <div class="user-box">
+          {{form.password1.label(for='password1')}}
+          {{form.password1(class="form-control")}}
+          <label>Password</label>
+        </div>
+        
+      <div class="user-box">
+          {{form.password2.label(for='password2')}}
+          {{form.password2(class="form-control")}}
+          <label>CONFIRM PASSWORD</label>
+          {{form.csrf_token()}}
+        </div>
+        <a href="{{url_for('login_page')}}"><h6>Already have an account</h6> </a>
+
+     <a href="#">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      {{form.submit()}}
+    </a>
+  </div>
+  </form>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+      const registrationForm = document.getElementById("registrationForm");
+      const password1 = document.getElementById('password1');
+      const password2 = document.getElementById('password2');
+      
+      registrationForm.addEventListener("submit", function(event) {
+          if (password1.value !== password2.value) {
+              event.preventDefault();
+              alert("Passwords do not match. Please re-enter your password.");
+              return;
+          }
+
+          const formData = new FormData(registrationForm);
+          fetch('/reg', {
+              method: 'POST',
+              body: formData
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.status === "success") {
+                  window.location.href = "{{ url_for('success_page') }}";
+              } else if(data.status ==="email") {
+                  alert('USER ALREADY REGISTRED WITH THIS EMAIL');
+                  
+              }
+              else if(data.status ==="phone"){
+                alert('MOBILE NUMBER ALREADY REGISTERED')
+              }
+              else{
+                alert('PAN NUMBER USER IS ALREADY REGISTERED')
+              }
+          })
+      });
+  });
+</script>
+
+</html>
